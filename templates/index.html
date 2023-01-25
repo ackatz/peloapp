@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Peloton Stats</title>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4">
+      <h1 class="py-4 text-3xl font-medium text-center text-gray-800">
+        Peloton Stats
+      </h1>
+      <h1 class="text-2xl font-medium text-center text-gray-400">Basic</h1>
+
+      <div class="grid grid-cols-3 gap-4 mt-4">
+        <div class="col-span-3 lg:col-span-1">
+          <div class="bg-white rounded-lg p-6">
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full mr-4 bg-indigo-500"></div>
+              <div>
+                <h2 class="text-lg font-medium text-gray-800">Total miles</h2>
+                <p class="text-gray-600">
+                  {{ total_distance[0]|round(2) }}
+                  <span class="text-gray-400"
+                    >({{ total_distance_last_week[0]|round(2) }} in last
+                    week)</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-3 lg:col-span-1">
+          <div class="bg-white rounded-lg p-6">
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full mr-4 bg-red-500"></div>
+              <div>
+                <h2 class="text-lg font-medium text-gray-800">
+                  Calories burned
+                </h2>
+                <p class="text-gray-600">
+                  {{ total_calories[0]|round(2) }}
+                  <span class="text-gray-400"
+                    >({{ total_calories_last_week[0]|round(2) }} in last
+                    week)</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-3 lg:col-span-1">
+          <div class="bg-white rounded-lg p-6">
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full mr-4 bg-green-500"></div>
+              <div>
+                <h2 class="text-lg font-medium text-gray-800">
+                  Rides completed
+                </h2>
+                <p class="text-gray-600">
+                  {{ total_rides[0] }}
+                  <span class="text-gray-400"
+                    >({{ total_rides_last_week[0]|round(2) }} in last
+                    week)</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-3 lg:col-span-1">
+          <div class="bg-white rounded-lg p-6">
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full mr-4 bg-indigo-500"></div>
+              <div>
+                <h2 class="text-lg font-medium text-gray-800">
+                  Average miles per ride
+                </h2>
+                <p class="text-gray-600">
+                  {{ (total_distance[0] / total_rides[0])|round(2) }}
+                  <span class="text-gray-400"
+                    >({{ (total_distance_last_week[0] /
+                    total_rides_last_week[0])|round(2) }} in last week)</span
+                  >
+                </p>
+              </div>
+              {% if (total_calories_last_week[0] /
+              total_rides_last_week[0])|round(2) < (total_calories[0] /
+              total_rides[0])|round(2) %}
+              <img
+                class="ml-auto mr-10"
+                height="25"
+                width="25"
+                src="/app/static/trending-down.svg"
+              />
+              {% else %}
+              <img
+                class="ml-auto mr-10"
+                height="25"
+                width="25"
+                src="/app/static/trending-up.svg"
+              />
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-3 lg:col-span-1">
+          <div class="bg-white rounded-lg p-6">
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full mr-4 bg-red-500"></div>
+              <div>
+                <h2 class="text-lg font-medium text-gray-800">
+                  Average calories per ride
+                </h2>
+                <p class="text-gray-600">
+                  {{ (total_calories[0] / total_rides[0])|round(2) }}
+                  <span class="text-gray-400"
+                    >({{ (total_calories_last_week[0] /
+                    total_rides_last_week[0])|round(2) }} in last week)</span
+                  >
+                </p>
+              </div>
+              {% if (total_calories_last_week[0] /
+              total_rides_last_week[0])|round(2) < (total_calories[0] /
+              total_rides[0])|round(2) %}
+              <img
+                class="ml-auto mr-10"
+                height="25"
+                width="25"
+                src="/app/static/trending-down.svg"
+              />
+              {% else %}
+              <img
+                class="ml-auto mr-10"
+                height="25"
+                width="25"
+                src="/app/static/trending-up.svg"
+              />
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-3 lg:col-span-1">
+          <div class="bg-white rounded-lg p-6">
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full mr-4 bg-green-500"></div>
+              <div>
+                <h2 class="text-lg font-medium text-gray-800">
+                  Average output per ride
+                </h2>
+                <p class="text-gray-600">
+                  {{ (total_output[0] / total_rides[0])|round(2) }}
+                  <span class="text-gray-400">
+                    ({{ (total_output_last_week[0] /
+                    total_rides_last_week[0])|round(2) }} in last week)</span
+                  >
+                </p>
+              </div>
+              {% if (total_output_last_week[0] /
+              total_rides_last_week[0])|round(2) < (total_output[0] /
+              total_rides[0])|round(2) %}
+              <img
+                class="ml-auto mr-10"
+                height="25"
+                width="25"
+                src="/app/static/trending-down.svg"
+              />
+              {% else %}
+              <img
+                class="ml-auto mr-10"
+                height="25"
+                width="25"
+                src="/app/static/trending-up.svg"
+              />
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr
+        class="w-8 h-8 mx-auto my-8 bg-gray-200 border-0 rounded md:my-12 dark:bg-gray-700"
+      />
+
+      <h1 class="py-4 text-2xl font-medium text-center text-gray-400">
+        Last ride
+      </h1>
+      <div class="grid grid-cols-3 gap-4 mt-2"></div>
+
+      {% if last_workout %}
+
+      <div class="relative overflow-x-auto">
+        <table
+          class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+        >
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="px-6 py-3">Title</th>
+              <th scope="col" class="px-6 py-3">Date</th>
+              <th scope="col" class="px-6 py-3">Time (minutes)</th>
+              <th scope="col" class="px-6 py-3">Output (kj)</th>
+              <th scope="col" class="px-6 py-3">Distance (mi)</th>
+              <th scope="col" class="px-6 py-3">Calories (kcal)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for workout in last_workout %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {{ workout['title'] }}
+              </th>
+              <td class="px-6 py-4">{{ workout['date'] }}</td>
+              <td class="px-6 py-4">{{ workout['total_time'] }}</td>
+              <td class="px-6 py-4">{{ workout['total_output'] }}</td>
+              <td class="px-6 py-4">{{ workout['distance'] }}</td>
+              <td class="px-6 py-4">{{ workout['calories'] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+
+        <h1 class="py-4 text-md font-medium text-center text-gray-400">None</h1>
+
+        {% endif %}
+
+        <hr
+          class="w-8 h-8 mx-auto my-8 bg-yellow-200 border-0 rounded md:my-12 dark:bg-gray-700"
+        />
+
+        <h1 class="py-4 text-2xl font-medium text-center text-gray-400">
+          PRs in past week
+        </h1>
+        <div class="grid grid-cols-3 gap-4 mt-2"></div>
+
+        {% if prs_last_week %}
+
+        <div class="relative overflow-x-auto">
+          <table
+            class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Title</th>
+                <th scope="col" class="px-6 py-3">Date</th>
+                <th scope="col" class="px-6 py-3">Time (minutes)</th>
+                <th scope="col" class="px-6 py-3">Output (kj)</th>
+                <th scope="col" class="px-6 py-3">Distance (mi)</th>
+                <th scope="col" class="px-6 py-3">Calories (kcal)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for pr in prs_last_week %}
+              <tr
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              >
+                <th
+                  scope="row"
+                  class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {{ pr['title'] }}
+                </th>
+                <td class="px-6 py-4">{{ pr['date'] }}</td>
+                <td class="px-6 py-4">{{ pr['total_time'] }}</td>
+                <td class="px-6 py-4">{{ pr['total_output'] }}</td>
+                <td class="px-6 py-4">{{ pr['distance'] }}</td>
+                <td class="px-6 py-4">{{ pr['calories'] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+
+          <h1 class="py-4 text-md font-medium text-center text-gray-400">
+            None
+          </h1>
+
+          {% endif %}
+
+          <hr
+            class="w-8 h-8 mx-auto my-8 bg-indigo-200 border-0 rounded md:my-12 dark:bg-gray-700"
+          />
+
+          <h1 class="py-4 text-2xl font-medium text-center text-gray-400">
+            Distance (all-time achivements)
+          </h1>
+          <div class="grid grid-cols-3 gap-4 mt-2">
+            <div class="col-span-1 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="mb-1 text-base font-medium dark:text-white">
+                  <h2 class="text-lg font-medium text-gray-800">
+                    Distance biked between
+                    <span class="font-bold underline">London</span>
+                    and
+                    <span class="font-bold underline">Paris</span>
+                  </h2>
+                  <p class="text-gray-600">
+                    {{ ((total_distance[0] / 290.08)*100)|round(1) }}%
+                  </p>
+                </div>
+                <div
+                  class="w-full bg-gray-200 rounded-full h-2.5 mb-2 dark:bg-gray-700"
+                >
+                  <div
+                    class="bg-gray-600 h-2.5 rounded-full dark:bg-gray-300"
+                    style="width: {{ ((total_distance[0] / 290.08)*100)|round(1) }}%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="mb-1 text-base font-medium dark:text-white">
+                  <h2 class="text-lg font-medium text-gray-800">
+                    Distance biked between
+                    <span class="font-bold underline">NYC</span>
+                    and
+                    <span class="font-bold underline">LA</span>
+                  </h2>
+                  <p class="text-gray-600">
+                    {{ ((total_distance[0] / 2651.80)*100)|round(1) }}%
+                  </p>
+                </div>
+                <div
+                  class="w-full bg-gray-200 rounded-full h-2.5 mb-2 dark:bg-gray-700"
+                >
+                  <div
+                    class="bg-gray-600 h-2.5 rounded-full dark:bg-gray-300"
+                    style="width: {{ ((total_distance[0] / 2651.80)*100)|round(1) }}%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-1 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="mb-1 text-base font-medium dark:text-white">
+                  <h2 class="text-lg font-medium text-gray-800">
+                    Distance biked between
+                    <span class="font-bold underline">Denver</span>
+                    and
+                    <span class="font-bold underline">Irvine</span>
+                  </h2>
+                  <p class="text-gray-600">
+                    {{ ((total_distance[0] / 948.71)*100)|round(1) }}%
+                  </p>
+                </div>
+                <div
+                  class="w-full bg-gray-200 rounded-full h-2.5 mb-2 dark:bg-gray-700"
+                >
+                  <div
+                    class="bg-gray-600 h-2.5 rounded-full dark:bg-gray-300"
+                    style="width: {{ ((total_distance[0] / 948.71)*100)|round(1) }}%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <iframe
+              width="100%"
+              height="300"
+              frameborder="0"
+              title="Felt Map"
+              src="https://felt.com/embed/map/Biking-Distance-London-and-Paris-RnwVtRt2T3yB5CahdoMAYC?lat=50.572561&lon=0.166538&zoom=4.765"
+            ></iframe>
+
+            <iframe
+              width="100%"
+              height="300"
+              frameborder="0"
+              title="Felt Map"
+              src="https://felt.com/embed/map/Biking-Distance-yyHMvfh8SAmWgT9AwuFkkxD?lat=37.805809&lon=-96.254252&zoom=2.765"
+            ></iframe>
+
+            <iframe
+              width="100%"
+              height="300"
+              frameborder="0"
+              title="Felt Map"
+              src="https://felt.com/embed/map/Untitled-Map-9Cm6br9ApWRS2STA0peE66uB?lat=36.722196&lon=-114.104949&zoom=4.05"
+            ></iframe>
+
+            <div class="col-span-3 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="flex items-center">
+                  <h1
+                    class="mr-2 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white"
+                  >
+                    <mark class="px-2 text-white bg-indigo-600 rounded"
+                      >{{ (total_distance[0] * 14.67)|int }}x</mark
+                    >
+                  </h1>
+                  <div>
+                    <h2 class="text-lg font-medium text-gray-800">
+                      Times biked across a football field
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-3 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="flex items-center">
+                  <h1
+                    class="mr-2 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white"
+                  >
+                    <mark class="px-2 text-white bg-indigo-600 rounded"
+                      >{{ (total_distance[0] / 26.2188)|int }}x</mark
+                    >
+                  </h1>
+                  <div>
+                    <h2 class="text-lg font-medium text-gray-800">
+                      Times biked the length of a marathon
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-3 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="flex items-center">
+                  <h1
+                    class="mr-2 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white"
+                  >
+                    <mark class="px-2 text-white bg-indigo-600 rounded"
+                      >{{ (total_distance[0] / 0.167235)|int }}x</mark
+                    >
+                  </h1>
+                  <div>
+                    <h2 class="text-lg font-medium text-gray-800">
+                      Times biked the length of the Titanic
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr
+            class="w-8 h-8 mx-auto my-8 bg-red-200 border-0 rounded md:my-12 dark:bg-gray-700"
+          />
+          <h1 class="py-4 text-2xl font-medium text-center text-gray-400">
+            Calories (all-time achievements)
+          </h1>
+          <div class="grid grid-cols-3 gap-4 mt-2">
+            <div class="col-span-3 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="flex items-center">
+                  <h1
+                    class="mr-2 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white"
+                  >
+                    <mark class="px-2 text-white bg-red-600 rounded"
+                      >{{ (total_calories[0]/3500)|round(1) }}
+                    </mark>
+                  </h1>
+                  <div>
+                    <h2 class="text-lg font-medium text-gray-800">
+                      Pounds lost via cycling
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-3 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="flex items-center">
+                  <h1
+                    class="mr-2 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white"
+                  >
+                    <mark class="px-2 text-white bg-red-600 rounded"
+                      >{{ (total_calories[0]/650)|round(1) }}</mark
+                    >
+                  </h1>
+                  <div>
+                    <h2 class="text-lg font-medium text-gray-800">
+                      Quesaritos worth of calories burned
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-3 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="flex items-center">
+                  <h1
+                    class="mr-2 text-xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white"
+                  >
+                    <mark class="px-2 text-white bg-red-600 rounded"
+                      >{{ (total_calories[0]/102)|round(1) }}</mark
+                    >
+                  </h1>
+                  <div>
+                    <h2 class="text-lg font-medium text-gray-800">
+                      Coors Lights worth of calories burned
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr
+            class="w-8 h-8 mx-auto my-8 bg-green-200 border-0 rounded md:my-12 dark:bg-gray-700"
+          />
+          <h1 class="py-4 text-2xl font-medium text-center text-gray-400">
+            Rides (all-time achievements)
+          </h1>
+          <div class="mb-4 grid grid-cols-2 gap-4 mt-2">
+            <div class="col-span-3 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="flex items-center">
+                  <h1
+                    class="mr-2 text-2xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white"
+                  >
+                    <mark class="px-2 text-white bg-green-600 rounded"
+                      >{{ (total_time[0]/60)|int }}</mark
+                    >
+                  </h1>
+                  <div>
+                    <h2 class="text-lg font-medium text-gray-800">
+                      Number of hours spent cycling
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-3 lg:col-span-1">
+              <div class="bg-white rounded-lg p-6">
+                <div class="flex items-center">
+                  <h1
+                    class="mr-2 text-2xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white"
+                  >
+                    <mark class="px-2 text-white bg-green-600 rounded"
+                      >{{ (total_time[0]/total_rides[0])|int }}</mark
+                    >
+                  </h1>
+                  <div>
+                    <h2 class="text-lg font-medium text-gray-800">
+                      Average length of ride in minutes
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
