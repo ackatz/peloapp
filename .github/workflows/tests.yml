@@ -1,0 +1,19 @@
+name: Tests
+
+on:
+  schedule:
+    - cron: "0 17 * * MON"
+
+  pull_request_target:
+    types:
+      - closed
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build a Docker image
+        run: docker build -t peloapp .
+      - name: Run tests
+        run: docker run peloapp /bin/bash -c "pip install --upgrade --no-cache-dir -r /app/requirements/tests.txt && pytest -vs /app"
