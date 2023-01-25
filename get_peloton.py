@@ -22,37 +22,41 @@ with get_db_connection() as conn:
 
     for w in workouts:
 
-        workout_id = w["id"]
+        if w["fitness_discipline"] == "cycling":
 
-        # See if workout_id is anywhere in the database
-        cur = conn.cursor()
-        cur.execute(
-            "SELECT workout_id FROM workouts WHERE workout_id=?",
-            (workout_id,),
-        )
-        result = cur.fetchone()
+            workout_id = w["id"]
 
-        if not result:
-
-            resp = pelo_conn.GetWorkoutMetricsById(workout_id)
-
-            date = datetime.fromtimestamp(w["created_at"]).strftime("%Y-%m-%d %H:%M:%S")
-
-            if not w["title"]:
-                w["title"] = w["ride"]["title"]
-
+            # See if workout_id is anywhere in the database
+            cur = conn.cursor()
             cur.execute(
-                "INSERT INTO workouts (workout_id, date, created_at, total_time, pr, title, output, distance, calories) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                [
-                    workout_id,
-                    date,
-                    w["created_at"],
-                    round((w["end_time"] - w["created_at"]) / 60, 2),
-                    w["is_total_work_personal_record"],
-                    w["title"],
-                    resp["summaries"][0]["value"],
-                    resp["summaries"][1]["value"],
-                    resp["summaries"][2]["value"],
-                ],
+                "SELECT workout_id FROM workouts WHERE workout_id=?",
+                (workout_id,),
             )
-            conn.commit()
+            result = cur.fetchone()
+
+            if not result:
+
+                resp = pelo_conn.GetWorkoutMetricsById(workout_id)
+
+                date = datetime.fromtimestamp(w["created_at"]).strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                )
+
+                if not w["title"]:
+                    w["title"] = w["ride"]["title"]
+
+                cur.execute(
+                    "INSERT INTO workouts (workout_id, date, created_at, total_time, pr, title, output, distance, calories) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    [
+                        workout_id,
+                        date,
+                        w["created_at"],
+                        round((w["end_time"] - w["created_at"]) / 60, 2),
+                        w["is_total_work_personal_record"],
+                        w["title"],
+                        resp["summaries"][0]["value"],
+                        resp["summaries"][1]["value"],
+                        resp["summaries"][2]["value"],
+                    ],
+                )
+                conn.commit()
