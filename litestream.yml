@@ -2,6 +2,6 @@ access-key-id: ${LITESTREAM_ACCESS_KEY_ID}
 secret-access-key: ${LITESTREAM_SECRET_ACCESS_KEY}
 
 dbs:
-  - path: /app/rss.db
+  - path: /app/workout_data.db
     replicas:
       - url: s3://ls-peloapp

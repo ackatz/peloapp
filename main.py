@@ -1,6 +1,4 @@
-import os
 import time
-import requests
 from fastapi import FastAPI, Request, HTTPException, Response
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
