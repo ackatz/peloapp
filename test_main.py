@@ -15,7 +15,7 @@ def setup_database():
     cursor.execute(
         """
 	    CREATE TABLE workouts
-        (workout_id, date, created_at, total_time, pr, title, total_output, distance, calories)
+        (workout_id, date, created_at, total_time, pr, title, output, distance, calories)
         """
     )
     workout_sample_data = [
