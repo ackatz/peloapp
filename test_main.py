@@ -41,7 +41,7 @@ def setup_database():
 def test_read_index(setup_database):
     response = client.get("/")
     assert response.status_code == 200
-    assert "<title>Peloton Stats</title>" in response.text
+    assert "<title>My Peloton Stats</title>" in response.text
 
 
 def test_read_robots_txt():
