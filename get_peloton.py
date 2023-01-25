@@ -42,7 +42,7 @@ with get_db_connection() as conn:
                 w["title"] = w["ride"]["title"]
 
             cur.execute(
-                "INSERT INTO workouts (workout_id, date, created_at, total_time, pr, title, total_output, distance, calories) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO workouts (workout_id, date, created_at, total_time, pr, title, output, distance, calories) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 [
                     workout_id,
                     date,
