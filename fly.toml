@@ -1,6 +1,6 @@
 # fly.toml file generated for cyberfeed on 2022-09-03T13:31:40-07:00
 
-app = "cyberfeed"
+app = "peloapp"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
