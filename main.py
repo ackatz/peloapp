@@ -47,7 +47,7 @@ async def index(Request: Request):
 
     total_calories = conn.execute("SELECT SUM(calories) FROM workouts").fetchone()
 
-    total_output = conn.execute("SELECT SUM(total_output) FROM workouts").fetchone()
+    total_output = conn.execute("SELECT SUM(output) FROM workouts").fetchone()
 
     total_rides = conn.execute("SELECT COUNT(*) FROM workouts").fetchone()
 
@@ -69,8 +69,8 @@ async def index(Request: Request):
         f"SELECT SUM(calories) FROM workouts WHERE created_at > ({now} - 604800) ORDER BY created_at DESC"
     ).fetchone()
 
-    total_output_last_week = conn.execute(
-        f"SELECT SUM(total_output) FROM workouts WHERE created_at > ({now} - 604800) ORDER BY created_at DESC"
+    output_last_week = conn.execute(
+        f"SELECT SUM(output) FROM workouts WHERE created_at > ({now} - 604800) ORDER BY created_at DESC"
     ).fetchone()
 
     total_rides_last_week = conn.execute(
@@ -91,7 +91,7 @@ async def index(Request: Request):
         "total_time": total_time,
         "total_distance_last_week": total_distance_last_week,
         "total_calories_last_week": total_calories_last_week,
-        "total_output_last_week": total_output_last_week,
+        "output_last_week": output_last_week,
         "total_rides_last_week": total_rides_last_week,
         "total_time_last_week": total_time_last_week,
         "workouts_last_week": workouts_last_week,
