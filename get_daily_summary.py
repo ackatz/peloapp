@@ -69,6 +69,8 @@ with get_db_connection() as conn:
     json = {
         "model": "text-davinci-003",
         "prompt": f"""Imagine you are a person tracking their fitness stats.
+        
+        Mention at the start what date and time it is in Pacific time.
 
         Here are your all time/total stats:
         {total_distance[0]} miles
