@@ -38,7 +38,8 @@ def robots():
 async def index(Request: Request):
     now = time.time()
     conn = get_db_connection()
-    daily_summary = conn.execute("SELECT * FROM daily_summary").fetchall()
+
+    daily_summary = conn.execute("SELECT * FROM daily_summary").fetchone()
 
     last_workout = conn.execute(
         "SELECT * FROM workouts ORDER BY created_at DESC LIMIT 1"
