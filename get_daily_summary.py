@@ -31,10 +31,6 @@ with get_db_connection() as conn:
 
     total_time = conn.execute("SELECT SUM(total_time) FROM workouts").fetchone()
 
-    workouts_last_week = conn.execute(
-        f"SELECT COUNT(*) FROM workouts WHERE created_at > ({now} - 604800) ORDER BY created_at DESC",
-    ).fetchone()
-
     prs_last_week = conn.execute(
         f"SELECT * FROM workouts WHERE created_at > ({now} - 604800) AND pr = 1 ORDER BY created_at DESC",
     ).fetchall()
@@ -70,24 +66,19 @@ with get_db_connection() as conn:
         "model": "text-davinci-003",
         "prompt": f"""Imagine you are a person tracking their fitness stats.
         
-        Say that the date and time is {now}.
-    
-        Here are your all time/total stats:
-        {total_distance[0]} miles
-        {total_calories[0]} calories
-        {total_time[0]}/60 hours
-        {total_rides[0]} rides
-        
         Here are your stats in the past week:
-        {workouts_last_week[0]} rides last week
         {total_distance_last_week[0]} miles last week
-        {total_calories_last_week[0]} calories last week
-        {total_time_last_week[0]}/60 hours last week
+        {total_calories_last_week[0]} calories burned last week
+        {total_time_last_week[0]} minutes last week
         {total_rides_last_week[0]} rides last week
-        {workouts_last_week[0]} rides last week
         {len(prs_last_week)} PRs last week
         
-        Write a 4-6 sentence summary of your fitness stats for the week. Are things trending upward or downward?""",
+        If I take the calories burned in the past week and divide by 3500, that should be how many pounds I've lost through cycling
+        in the past week.
+        
+        If I take the calories burned in the past week and divide by 508, that should be how many Shrimp Tempura rolls I've burned this week. 
+        
+        Write a 4-6 sentence summary of your fitness stats for the week and some of the food stats mentioned above.""",
         "max_tokens": 1000,
         "temperature": 0,
     }
