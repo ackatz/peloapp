@@ -84,8 +84,5 @@ with get_db_connection() as conn:
 
     # Add the info to the database
 
-    cur.execute(
-        "UPDATE daily_summary SET summary=?,",
-        [ai_summary],
-    )
+    cur.execute("UPDATE daily_summary SET summary=?", ai_summary)
     conn.commit()
