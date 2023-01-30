@@ -70,11 +70,10 @@ with get_db_connection() as conn:
         "model": "text-davinci-003",
         "prompt": f"""Imagine you are a person tracking their fitness stats. 
         Last week, you rode {total_distance_last_week[0]} miles, burned {total_calories_last_week[0]} calories, and spent {total_time_last_week[0]} minutes on the bike. 
-        You also had {total_rides_last_week[0]} rides, and your average output was {total_output_last_week[0]} watts. 
-        You also had {workouts_last_week[0]} workouts, and you set {len(prs_last_week)} PRs. 
-        You rode {total_distance[0]} miles, burned {total_calories[0]} calories, and spent {total_time[0]} minutes on the bike. 
-        You also had {total_rides[0]} rides, and your average output was {total_output[0]} watts. 
-        You also had {total_rides[0]} workouts, and you set {len(prs_last_week)} PRs.
+        You also had {total_rides_last_week[0]} rides last week, and your average output was {total_output_last_week[0]} watts last week. 
+        You also had {workouts_last_week[0]} workouts last week, and you set {len(prs_last_week)} PRs last week. 
+        Since you've started cycling, you've rode {total_distance[0]} miles, burned {total_calories[0]} calories, and spent {total_time[0]} minutes on the bike. 
+        You also had {total_rides[0]} rides in total, and your average output was {total_output[0]} watts. 
         Write a 3-5 sentence summary of your fitness stats for the week. Are things trending upward or downward?""",
         "max_tokens": 1000,
         "temperature": 0,
@@ -84,5 +83,6 @@ with get_db_connection() as conn:
 
     # Add the info to the database
 
-    cur.execute("UPDATE daily_summary SET summary=?", ai_summary)
+    cur.execute("UPDATE daily_summary SET summary = ?", (ai_summary,))
+
     conn.commit()
