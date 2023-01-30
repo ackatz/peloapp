@@ -4,7 +4,6 @@ import os
 import time
 
 now = time.time()
-f
 
 
 def get_db_connection():
