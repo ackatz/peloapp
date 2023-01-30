@@ -118,21 +118,20 @@
                 src="/app/static/trending-down.svg"
               />
               {% elif (total_calories_last_week[0] /
-              total_rides_last_week[0])|round(2) == (total_calories[0] /
+              total_rides_last_week[0])|round(2) < (total_calories[0] /
               total_rides[0])|round(2) %}
               <img
                 class="ml-auto mr-10"
                 height="25"
                 width="25"
-                src="/app/static/trending-flat.svg"
+                src="/app/static/trending-up.svg"
               />
-
               {% else %}
               <img
                 class="ml-auto mr-10"
                 height="25"
                 width="25"
-                src="/app/static/trending-up.svg"
+                src="/app/static/trending-flat.svg"
               />
               {% endif %}
             </div>
@@ -164,12 +163,21 @@
                 width="25"
                 src="/app/static/trending-down.svg"
               />
-              {% else %}
+              {% elif (total_calories_last_week[0] /
+              total_rides_last_week[0])|round(2) > (total_calories[0] /
+              total_rides[0])|round(2) %}
               <img
                 class="ml-auto mr-10"
                 height="25"
                 width="25"
                 src="/app/static/trending-up.svg"
+              />
+              {% else %}
+              <img
+                class="ml-auto mr-10"
+                height="25"
+                width="25"
+                src="/app/static/trending-flat.svg"
               />
               {% endif %}
             </div>
@@ -201,12 +209,21 @@
                 width="25"
                 src="/app/static/trending-down.svg"
               />
-              {% else %}
+              {% elif (total_output_last_week[0] /
+              total_rides_last_week[0])|round(2) > (total_output[0] /
+              total_rides[0])|round(2) %}
               <img
                 class="ml-auto mr-10"
                 height="25"
                 width="25"
                 src="/app/static/trending-up.svg"
+              />
+              {% else %}
+              <img
+                class="ml-auto mr-10"
+                height="25"
+                width="25"
+                src="/app/static/trending-flat.svg"
               />
               {% endif %}
             </div>
