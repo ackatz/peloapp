@@ -70,8 +70,8 @@ with get_db_connection() as conn:
         "model": "text-davinci-003",
         "prompt": f"""Imagine you are a person tracking their fitness stats.
         
-        Mention at the start what date and time it is in Pacific time.
-
+        Say that the date and time is {now}.
+    
         Here are your all time/total stats:
         {total_distance[0]} miles
         {total_calories[0]} calories
@@ -87,8 +87,7 @@ with get_db_connection() as conn:
         {workouts_last_week[0]} rides last week
         {len(prs_last_week)} PRs last week
         
-        Write a 4-6 sentence summary of your fitness stats for the week. Are things trending upward or downward?
-        What comparisons can you make between your total stats and the stats in the past week?""",
+        Write a 4-6 sentence summary of your fitness stats for the week. Are things trending upward or downward?""",
         "max_tokens": 1000,
         "temperature": 0,
     }
