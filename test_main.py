@@ -18,6 +18,14 @@ def setup_database():
         (workout_id, date, created_at, total_time, pr, title, output, distance, calories)
         """
     )
+    cursor.execute(
+        """
+        CREATE TABLE daily_summary
+        (summary)
+        """
+    )
+    daily_summary_sample_data = [("This is a sample summary",)]
+    cursor.executemany("INSERT INTO daily_summary VALUES(?)", daily_summary_sample_data)
     workout_sample_data = [
         (
             "0843353daa63879a84c3dae4d07b23b5",
