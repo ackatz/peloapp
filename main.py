@@ -38,6 +38,7 @@ def robots():
 async def index(Request: Request):
     now = time.time()
     conn = get_db_connection()
+    daily_summary = conn.execute("SELECT * FROM daily_summary").fetchall()
 
     last_workout = conn.execute(
         "SELECT * FROM workouts ORDER BY created_at DESC LIMIT 1"
@@ -98,5 +99,6 @@ async def index(Request: Request):
         "prs_last_week": prs_last_week,
         "last_workout": last_workout,
         "now": now,
+        "daily_summary": daily_summary,
     }
     return templates.TemplateResponse("index.html", context)
