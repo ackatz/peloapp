@@ -75,22 +75,20 @@ with get_db_connection() as conn:
         Here are your all time/total stats:
         {total_distance[0]} miles
         {total_calories[0]} calories
-        {total_time[0]} minutes
+        {total_time[0]}/60 hours
         {total_rides[0]} rides
-        {total_output[0]} in kj
         
         Here are your stats in the past week:
-        {workouts_last_week[0]} workouts last week
+        {workouts_last_week[0]} rides last week
         {total_distance_last_week[0]} miles last week
         {total_calories_last_week[0]} calories last week
-        {total_time_last_week[0]} minutes last week
+        {total_time_last_week[0]}/60 hours last week
         {total_rides_last_week[0]} rides last week
-        {total_output_last_week[0]} in kj last week
-        {workouts_last_week[0]} workouts last week
+        {workouts_last_week[0]} rides last week
         {len(prs_last_week)} PRs last week
         
         Write a 4-6 sentence summary of your fitness stats for the week. Are things trending upward or downward?
-        What comparisons can you make between the total stats and the stats in the past week?""",
+        What comparisons can you make between your total stats and the stats in the past week?""",
         "max_tokens": 1000,
         "temperature": 0,
     }
