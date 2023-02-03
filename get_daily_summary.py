@@ -83,7 +83,7 @@ with get_db_connection() as conn:
         "temperature": 0,
     }
     ai_request = requests.post(url, headers=headers, json=json).json()
-    ai_summary = ai_request["choices"][0]["text"]
+    ai_summary = ai_request["choices"][0]["text"].lstrip()
 
     # Add the info to the database
 

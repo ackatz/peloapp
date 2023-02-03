@@ -1,2 +1,2 @@
-*/20 * * * * /usr/local/bin/python3 /app/get_peloton.py >> /app/log/get_peloton.log 2>&1
-0 15 * * * /usr/local/bin/python3 /app/get_daily_summary.py >> /app/log/get_daily_summary.log 2>&1
+0 20 * * * * /usr/local/bin/python3 /app/get_peloton.py >> /app/log/get_peloton.log 2>&1
+1 20 * * * /usr/local/bin/python3 /app/get_daily_summary.py >> /app/log/get_daily_summary.log 2>&1
