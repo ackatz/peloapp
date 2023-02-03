@@ -36,6 +36,18 @@ with get_db_connection() as conn:
 
             if not result:
 
+                if w["ride"]["distance_unit"] == "metric":
+
+                    output = resp["summaries"][1]["value"]
+                    distance = resp["summaries"][2]["value"]
+                    calories = resp["summaries"][3]["value"]
+
+                else:
+
+                    output = resp["summaries"][0]["value"]
+                    distance = resp["summaries"][1]["value"]
+                    calories = resp["summaries"][2]["value"]
+
                 resp = pelo_conn.GetWorkoutMetricsById(workout_id)
 
                 date = datetime.fromtimestamp(w["created_at"]).strftime(
@@ -54,9 +66,9 @@ with get_db_connection() as conn:
                         round((w["end_time"] - w["created_at"]) / 60, 2),
                         w["is_total_work_personal_record"],
                         w["title"],
-                        resp["summaries"][0]["value"],
-                        resp["summaries"][1]["value"],
-                        resp["summaries"][2]["value"],
+                        output,
+                        distance,
+                        calories,
                     ],
                 )
                 conn.commit()
