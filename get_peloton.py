@@ -36,19 +36,18 @@ with get_db_connection() as conn:
 
             if not result:
 
-                if w["ride"]["distance_unit"] == "metric":
+                resp = pelo_conn.GetWorkoutMetricsById(workout_id)
 
-                    output = resp["summaries"][1]["value"]
-                    distance = resp["summaries"][2]["value"]
-                    calories = resp["summaries"][3]["value"]
+                try:
+                    if w["ride"]["distance_unit"] == "metric":
+                        output = resp["summaries"][1]["value"]
+                        distance = resp["summaries"][2]["value"]
+                        calories = resp["summaries"][3]["value"]
 
-                else:
-
+                except KeyError:
                     output = resp["summaries"][0]["value"]
                     distance = resp["summaries"][1]["value"]
                     calories = resp["summaries"][2]["value"]
-
-                resp = pelo_conn.GetWorkoutMetricsById(workout_id)
 
                 date = datetime.fromtimestamp(w["created_at"]).strftime(
                     "%Y-%m-%d %H:%M:%S"
