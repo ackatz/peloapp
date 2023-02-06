@@ -67,9 +67,9 @@ with get_db_connection() as conn:
         "prompt": f"""Imagine you are a person tracking their fitness stats.
         
         Here are your stats in the past week:
-        {total_distance_last_week[0]} miles last week
+        {total_distance_last_week[0]} miles biked last week
         {total_calories_last_week[0]} calories burned last week
-        {total_time_last_week[0]} minutes last week
+        {total_time_last_week[0]} minutes biked last week
         {total_rides_last_week[0]} rides last week
         {len(prs_last_week)} PRs last week
         
