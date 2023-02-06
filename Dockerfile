@@ -22,9 +22,6 @@ COPY ./litestream.yml /etc/litestream.yml
 
 RUN addgroup --system app && adduser --system --group app
 
-RUN apt-get update && apt-get install -y htop --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
-
 ENV PATH="/home/app/.local/bin:${PATH}"
 ENV PYTHONUNBUFFERED=1
 
