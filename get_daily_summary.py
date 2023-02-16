@@ -73,9 +73,6 @@ with get_db_connection() as conn:
         {total_rides_last_week[0]} rides last week
         {len(prs_last_week)} PRs last week
         
-        If I take {total_calories_last_week[0]} and divide by 3500, that should be how many pounds I've lost through cycling
-        in the past week.
-        
         If I take {total_calories_last_week[0]} and divide by 508, that should be how many Shrimp Tempura rolls I've burned this week. 
         
         Write a 4-6 sentence summary of your fitness stats for the week and some of the food stats mentioned above.""",
